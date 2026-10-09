@@ -1,0 +1,98 @@
+<main>
+  <div class="heading">
+    <h1>The MoMo Følgeseddel{{ editingId() ? ' #' + editingId() : '' }}</h1>
+    @if (editingId()) {
+      <button type="button" class="secondary" (click)="newNote()">+ Ny følgeseddel</button>
+    }
+  </div>
+
+  <form #form="ngForm" (ngSubmit)="print()">
+    <label>
+      Modtager / Receiver
+      <input name="receiver" [(ngModel)]="note.receiver" required />
+    </label>
+
+    <label>
+      Dato / Date
+      <span class="date">
+        {{ note.date ? formatDate(note.date) : '' }}
+        <input
+          type="date"
+          name="date"
+          [(ngModel)]="note.date"
+          required
+          (click)="$any($event.target).showPicker()"
+        />
+      </span>
+    </label>
+
+    <label>
+      Temperatur (°)
+      <input type="number" step="0.1" name="temperature" inputmode="decimal" [(ngModel)]="note.temperature" required />
+    </label>
+
+    <fieldset>
+      <legend>Varer / Items</legend>
+      @for (item of note.items; track item; let i = $index) {
+        <div class="item">
+          <select [name]="'product' + i" [(ngModel)]="item.product">
+            @for (product of available(item); track product) {
+              <option [value]="product">{{ product }}</option>
+            }
+          </select>
+          <input type="number" min="0" [name]="'quantity' + i" [(ngModel)]="item.quantity" />
+          <button type="button" class="secondary" (click)="removeItem(i)" [disabled]="note.items.length === 1">✕</button>
+        </div>
+      }
+      <button type="button" class="secondary" (click)="addItem()" [disabled]="note.items.length === products.length">
+        + Tilføj vare
+      </button>
+    </fieldset>
+
+    <div class="description">
+      <strong>Produktbeskrivelse / Description</strong>
+      <p>{{ description(note) || '–' }}</p>
+    </div>
+
+    <p class="total">Total: {{ total(note) }} stk.</p>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">Gem og print</button>
+      <button type="button" class="secondary" (click)="download()" [disabled]="form.invalid">Gem og download</button>
+    </div>
+  </form>
+
+  <h2>Gemte følgesedler</h2>
+  @if (saved().length) {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dato</th>
+            <th>Modtager</th>
+            <th>Temp.</th>
+            <th>Antal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (entry of saved(); track entry.id) {
+            <tr [class.editing]="entry.id === editingId()">
+              <td>{{ formatDate(entry.date) }}</td>
+              <td>{{ entry.receiver }}</td>
+              <td>{{ entry.temperature }}°</td>
+              <td>{{ total(entry) }}</td>
+              <td class="row-actions">
+                <button type="button" class="secondary" (click)="edit(entry)">Rediger</button>
+                <button type="button" class="secondary" (click)="print(entry)">Print</button>
+                <button type="button" class="danger" (click)="remove(entry)">Slet</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <p class="empty">Ingen gemte følgesedler endnu.</p>
+  }
+</main>

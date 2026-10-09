@@ -1,0 +1,202 @@
+main {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  font-weight: normal;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: white;
+}
+
+.date {
+  position: relative;
+  min-height: 1.2em;
+  padding: 10px;
+  font-weight: normal;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: white;
+}
+
+.date input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+fieldset {
+  display: grid;
+  gap: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+legend {
+  font-weight: 600;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr 90px auto;
+  gap: 8px;
+}
+
+.total {
+  margin: 0;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+button {
+  flex: 1;
+  font: inherit;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #1d4ed8;
+  color: white;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #e5e7eb;
+  color: #111;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.heading button {
+  flex: none;
+}
+
+h2 {
+  margin-top: 40px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  white-space: nowrap;
+}
+
+tr.editing {
+  background: #eff6ff;
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.row-actions button {
+  padding: 6px 10px;
+}
+
+button.danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.empty {
+  color: #666;
+}
+
+.description p {
+  margin: 6px 0 0;
+  color: #444;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  thead {
+    display: none;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+  }
+
+  tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 4px 12px;
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  td {
+    padding: 0;
+    border: none;
+  }
+
+  td:nth-child(2) {
+    font-weight: 600;
+    white-space: normal;
+  }
+
+  td.row-actions {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+  }
+
+  .row-actions button {
+    padding: 10px;
+  }
+}
